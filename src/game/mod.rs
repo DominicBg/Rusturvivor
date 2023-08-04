@@ -19,14 +19,10 @@ pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
-        app.add_startup_system(spawn_camera)
+        app.add_systems(Startup, spawn_camera)
             .add_event::<DamageEvent>()
             .add_event::<KillEvent>()
-            .add_plugin(SpellPlugin)
-            .add_plugin(HealthPlugin)
-            .add_plugin(UtilPlugin,)
-            .add_plugin(HeroPlugin)
-            .add_plugin(MinionPlugin);
+            .add_plugins((SpellPlugin, HealthPlugin, UtilPlugin, HeroPlugin, MinionPlugin));
     }
 }
 

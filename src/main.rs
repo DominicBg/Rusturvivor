@@ -9,7 +9,7 @@ fn main() {
        // .add_plugin(RustGpuPlugin)
        // .add_plugin(RustGpuMaterialPlugin::<MyRustGpuMaterial>::default())
        // .add_startup_system(setup)
-        .add_plugin(GamePlugin)
+        .add_plugins(GamePlugin)
         .run();
 }
 
