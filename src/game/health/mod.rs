@@ -8,6 +8,6 @@ pub struct HealthPlugin;
 
 impl Plugin for HealthPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems((update_health, update_damage_hits, sprite_damage_flash));
+        app.add_systems(Update,(update_health, update_damage_hits, sprite_damage_flash));
     }
 }

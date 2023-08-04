@@ -7,14 +7,14 @@ pub struct Health{
     pub invinsible_time: f32
 }
 
-//#[derive(Event)]
+#[derive(Event)]
 pub struct DamageEvent{
     pub attacker: Entity,
     pub receiver: Entity,
     pub damage: i32
 }
 
-//#[derive(Event)]
+#[derive(Event)]
 pub struct KillEvent{
     pub killer: Entity,
     pub dead: Entity,
