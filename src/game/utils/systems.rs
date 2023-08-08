@@ -26,3 +26,17 @@ pub fn update_mana_each_second(mut mana_query: Query<&mut Mana>, time: Res<Time>
     }
 }
 
+pub fn create_sprite_bundle(
+    asset: &str,
+    position: Vec3,
+    asset_server: &Res<AssetServer>,
+) -> SpriteBundle {
+    SpriteBundle {
+        transform: Transform {
+            translation: position,
+            ..default()
+        },
+        texture: asset_server.load(asset),
+        ..default()
+    }
+}

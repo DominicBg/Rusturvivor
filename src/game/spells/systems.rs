@@ -3,7 +3,7 @@ use std::f32::consts::PI;
 use super::components::*;
 use super::spell_factory::*;
 use crate::game::minions::components::Minion;
-use crate::game::utils::components::*;
+
 use bevy::prelude::*;
 use rand::random;
 
@@ -73,7 +73,6 @@ pub fn setup_direction_toward_closest_enemy(
 ) {
     for (mut straight_line, transform) in spell_query.iter_mut() {
         let closest_minion_pos = get_closest_minion_pos(transform.translation, &minion_query);
-        println!("closest enemy {}", closest_minion_pos);
         let diff = closest_minion_pos - transform.translation;
         let angle:f32 = diff.y.atan2(diff.x);
         straight_line.direction = Vec2::from_angle(angle);
@@ -109,11 +108,6 @@ pub fn update_spiral_spell(mut spell_query: Query<(&mut Transform, &SpiralSpellM
     }
 }
 
-pub fn synch_damage_area_to_position(mut damage_area_query: Query<(&Transform, &mut DamageArea)>) {
-    for (transform, mut damage_area) in damage_area_query.iter_mut() {
-        damage_area.position = transform.translation;
-    }
-}
 
 pub fn get_closest_minion_pos(
     current_pos: Vec3,

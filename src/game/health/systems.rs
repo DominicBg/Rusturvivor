@@ -75,3 +75,9 @@ pub fn sprite_damage_flash(mut sprite_query: Query<(&Health, &mut Sprite)>) {
         sprite.color.set_a(alpha);
     }
 }
+
+pub fn synch_damage_area_to_position(mut damage_area_query: Query<(&Transform, &mut DamageArea)>) {
+    for (transform, mut damage_area) in damage_area_query.iter_mut() {
+        damage_area.position = transform.translation;
+    }
+}

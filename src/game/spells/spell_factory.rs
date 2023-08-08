@@ -2,6 +2,7 @@ use super::components::*;
 use bevy::prelude::*;
 
 use crate::game::utils::components::*;
+use crate::game::utils::systems::*;
 
 pub fn spawn_spell(
     spell_request: &SpellRequest,
@@ -21,7 +22,7 @@ pub fn spawn_spell_hammer(
     asset_server: &Res<AssetServer>,
 ) {
     commands.spawn((
-        create_spell_bundle("sprites/hammer.png", spell_request.position, asset_server),
+        create_sprite_bundle("sprites/hammer.png", spell_request.position, asset_server),
         Spell {
             life_time: 5.0,
             current_lifetime: 0.0,
@@ -51,7 +52,7 @@ pub fn spawn_spell_sword(
     asset_server: &Res<AssetServer>,
 ) {
     commands.spawn((
-        create_spell_bundle("sprites/sword.png", spell_request.position, asset_server),
+        create_sprite_bundle("sprites/sword.png", spell_request.position, asset_server),
         Spell {
             life_time: 0.5,
             ..default()
@@ -78,7 +79,7 @@ pub fn spawn_spell_orb(
     asset_server: &Res<AssetServer>,
 ) {
     commands.spawn((
-        create_spell_bundle("sprites/orb.png", spell_request.position, asset_server),
+        create_sprite_bundle("sprites/orb.png", spell_request.position, asset_server),
         Spell {
             life_time: 2.0,
             ..default()
@@ -102,17 +103,3 @@ pub fn spawn_spell_orb(
     ));
 }
 
-fn create_spell_bundle(
-    asset: &str,
-    position: Vec3,
-    asset_server: &Res<AssetServer>,
-) -> SpriteBundle {
-    SpriteBundle {
-        transform: Transform {
-            translation: position,
-            ..default()
-        },
-        texture: asset_server.load(asset),
-        ..default()
-    }
-}

@@ -24,11 +24,7 @@ pub fn create_spell_auto_caster_bundle(auto_caster_request: AutoCasterRequest) -
     }
 }
 
-#[derive(Bundle)]
-pub struct AutoCasterBundle {
-    pub auto_caster: AutoCaster,
-    pub transform: Transform,
-}
+
 
 fn spell_hammer_auto_caster_bundle(auto_caster_request: AutoCasterRequest) -> AutoCasterBundle {
     return AutoCasterBundle {
@@ -39,6 +35,7 @@ fn spell_hammer_auto_caster_bundle(auto_caster_request: AutoCasterRequest) -> Au
         },
 
         transform: Transform {
+            
             //link as a child to player
             translation: Vec3::ZERO,
             ..default()

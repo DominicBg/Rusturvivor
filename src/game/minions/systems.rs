@@ -2,6 +2,7 @@ use super::components::*;
 use crate::game::health::components::*;
 use crate::game::hero::components::*;
 use crate::game::utils::components::*;
+
 use bevy::prelude::*;
 use rand::prelude::*;
 
@@ -73,28 +74,38 @@ pub fn spawn_minion(
         let spawn_pos: Vec3 = lerp(spawn_corner1, spawn_corner2, random::<f32>());
 
         //check minion index to spawn good archetype
-        commands.spawn((
-            SpriteBundle {
-                transform: Transform {
-                    translation: spawn_pos,
+        let entity = commands
+            .spawn((
+                SpriteBundle {
+                    transform: Transform {
+                        translation: spawn_pos,
+                        ..default()
+                    },
+                    texture: asset_server.load("sprites/minion1.png"),
                     ..default()
                 },
-                texture: asset_server.load("sprites/minion1.png"),
-                ..default()
-            },
-            Minion {},
-            Health {
-                current_hp: 35,
-                max_hp: 35,
-                invinsible_time: 0.0,
-            },
-            Movement {
-                movement_speed: 25.0,
-            },
-            Team {
-                team_type: TeamType::Minion,
-            },
-        ));
+                Minion {},
+                Health {
+                    current_hp: 35,
+                    max_hp: 35,
+                    invinsible_time: 0.0,
+                },
+                Movement {
+                    movement_speed: 25.0,
+                },
+                Team {
+                    team_type: TeamType::Minion,
+                },
+            ))
+            .id();
+
+        commands.entity(entity).insert(DamageArea {
+            area: 16.0,
+            onwer_team_type: TeamType::Minion,
+            damage: 1,
+            owner: entity,
+            position: Vec3::ZERO,
+        });
     }
 }
 
@@ -188,18 +199,17 @@ pub fn update_minions_same_direction(
 
 pub fn update_loop_over_map(
     mut minion_query: Query<&mut Transform, (With<Minion>, Without<Camera2d>)>,
-    camera_query: Query<&Transform, With<Camera2d>>) 
-{
+    camera_query: Query<&Transform, With<Camera2d>>,
+) {
     let camera = camera_query.single();
     let camera_pos = camera.translation;
 
-    for mut minion_transform in minion_query.iter_mut()
-     {
+    for mut minion_transform in minion_query.iter_mut() {
         let camera_minion_diff = minion_transform.translation - camera_pos;
 
-        if camera_minion_diff.length_squared() > MAP_SIZE.powi(2) 
-        {
-            minion_transform.translation = camera_pos - camera_minion_diff.normalize() * (MAP_SIZE - MAP_SIZE_SPAWN_OFFSET);
+        if camera_minion_diff.length_squared() > MAP_SIZE.powi(2) {
+            minion_transform.translation =
+                camera_pos - camera_minion_diff.normalize() * (MAP_SIZE - MAP_SIZE_SPAWN_OFFSET);
         }
     }
 }

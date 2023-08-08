@@ -2,9 +2,9 @@ use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct Health{
-    pub current_hp: i32,
     pub max_hp: i32,
-    pub invinsible_time: f32
+    pub invinsible_time: f32,
+    pub current_hp: i32,
 }
 
 #[derive(Event)]

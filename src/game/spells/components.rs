@@ -56,3 +56,8 @@ pub struct StraightLineMovement {
 pub struct LookAtDirection {
 }
 
+#[derive(Bundle)]
+pub struct AutoCasterBundle {
+    pub auto_caster: AutoCaster,
+    pub transform: Transform,
+}
